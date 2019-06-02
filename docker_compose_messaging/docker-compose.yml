@@ -1,0 +1,21 @@
+version: '3'
+services:
+  receive_message:
+    build: ../message_receiver
+    ports:
+      - "8090:8090"
+    depends_on:
+      - rabbitmq
+    network_mode: "host"
+  send_message:
+    build: ../message_sender
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+    network_mode: "host"
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
